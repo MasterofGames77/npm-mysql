@@ -18,6 +18,7 @@ const connection = mysql.createConnection({
   database: dbName // the name of your database
 });
 
+// Connects to the MySQL server
 connection.connect((err) => {
   if (err) {
     console.error('Error connecting to database:', err);
@@ -25,8 +26,9 @@ connection.connect((err) => {
   }
   console.log('Connected to database successfully!');
 
+  // Define the data to be inserted
   function addUser(newUser) {
-    const sql = `INSERT INTO employees (first_name, last_name, department, salary, job_title, hire_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO ${process.env.DB_TABLE_NAME} (first_name, last_name, department, salary, job_title, hire_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     const values = [
       newUser.first_name,
       newUser.last_name,
@@ -37,6 +39,7 @@ connection.connect((err) => {
       newUser.end_date
     ];
 
+    // Execute the query
     connection.query(sql, values, (error, results) => {
       if (error) {
         console.error('Error adding user:', error);
@@ -47,17 +50,18 @@ connection.connect((err) => {
   }
 
   const newUser = {
-    first_name: 'James',
-    last_name: 'Cook',
-    department: 'Engineering',
-    salary: 70000,
-    job_title: 'Software Engineer',
-    hire_date: '2023-04-18',
+    first_name: 'Alexa',
+    last_name: 'Rhodes',
+    department: 'Development',
+    salary: 65000,
+    job_title: 'Software Developer',
+    hire_date: '2023-02-21',
     end_date: null
   };
 
   addUser(newUser);
 
+  // Close the connection
   connection.end((err) => {
     if (err) {
       console.error('Error closing database connection:', err);
