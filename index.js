@@ -4,11 +4,22 @@ const app = express()
 
 const mysql = require('mysql2')
 
+const dbHost = process.env.DB_HOST
+const dbUser = process.env.DB_USER
+const dbPassword = process.env.DB_PASSWORD
+const dbName = process.env.DB_NAME
+const dbTableName = process.env.DB_TABLE_NAME
+const dbPort = process.env.PORT
+
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'DriftingSoul81',
-  database: 'hrdb'
+  // host: 'localhost',
+  // user: 'root',
+  // password: 'DriftingSoul81',
+  // database: 'hrdb'
+  host: dbHost, // or your database host
+  user: dbUser, // your MySQL username
+  password: dbPassword, // your MySQL password
+  database: dbName // the name of your database
 });
 
 connection.connect((err) => {
