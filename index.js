@@ -12,10 +12,6 @@ const dbTableName = process.env.DB_TABLE_NAME
 const dbPort = process.env.PORT
 
 const connection = mysql.createConnection({
-  // host: 'localhost',
-  // user: 'root',
-  // password: 'DriftingSoul81',
-  // database: 'hrdb'
   host: dbHost, // or your database host
   user: dbUser, // your MySQL username
   password: dbPassword, // your MySQL password
