@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Database</title>
+</head>
+<body>
+    <form id="employeeTable">
+        <label for="first_name"><b>First Name:</b></label>
+        <input tpye="text" id="first_name" name="first_name">
+        <br>
+
+        <label for="last_name"><b>Last Name:</b></label>
+        <input type="text" id="last_name" name="last_name">
+        <br>
+
+        <label for="department"><b>Department:</b></label>
+        <input type="text" id="department" name="department">
+        <br>
+
+        <label for="salary"><b>Salary:</b></label>
+        <input type="number" id="salary" name="salary">
+        <br>
+
+        <label for="job_title"><b>Job Title:</b></label>
+        <input type="text" id="job_title" name="job_title">
+        <br>
+
+        <label for="hire_date"><b>Hire Date:</b></label>
+        <input type="date" id="hire_date" name="hire_date">
+        <br>
+
+        <label for="end_date"><b>End Date:</b></label>
+        <input type="date" id="end_date" name="end_date">
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('employeeTable').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('http://localhost:3005/adduser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.text())
+              .then(data => {
+                alert(data);
+              }).catch(error => {
+                console.error('Error:', error);
+              });
+        });
+    </script>
+</body>
+</html>
