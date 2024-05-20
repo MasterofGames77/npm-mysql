@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+</head>
+<body>
+    <h2>Employee Login</h2>
+    <form id="loginForm">
+        <label for="last_name"><b>Last Name:</b></label>
+        <input type="text" id="last_name" name="last_name" required><br>
+
+        <label for="password"><b>Password:</b></label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Login</button>
+    </form>
+    <button id="logoutButton" style="display:none;">Logout</button>
+    <p id="loginStatus"></p> <!-- Placeholder for login status message -->
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('http://localhost:3007/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json())
+              .then(data => {
+                  const statusElement = document.getElementById('loginStatus');
+                  const logoutButton = document.getElementById('logoutButton');
+                  if (data.success) {
+                      statusElement.textContent = `Login successful. Welcome, ${data.first_name}!`;
+                      statusElement.style.color = 'green';
+                      logoutButton.style.display = 'block';
+                      document.getElementById('loginForm').style.display = 'none';
+                  } else {
+                      statusElement.textContent = 'Login failed. ' + data.message;
+                      statusElement.style.color = 'red';
+                  }
+              }).catch(error => {
+                  console.error('Error:', error);
+                  document.getElementById('loginStatus').textContent = 'An error occurred during login.';
+              });
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('http://localhost:3007/logout', {
+                method: 'POST',
+            }).then(response => response.json())
+              .then(data => {
+                  const statusElement = document.getElementById('loginStatus');
+                  if (data.success) {
+                      statusElement.textContent = 'Logout successful.';
+                      statusElement.style.color = 'green';
+                      document.getElementById('loginForm').style.display = 'block';
+                      document.getElementById('logoutButton').style.display = 'none';
+                  } else {
+                      statusElement.textContent = 'Logout failed. ' + data.message;
+                      statusElement.style.color = 'red';
+                  }
+              }).catch(error => {
+                  console.error('Error:', error);
+                  document.getElementById('loginStatus').textContent = 'An error occurred during logout.';
+              });
+        });
+    </script>
+</body>
+</html>
