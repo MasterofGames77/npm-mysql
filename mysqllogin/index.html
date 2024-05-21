@@ -17,7 +17,12 @@
         <button type="submit">Login</button>
     </form>
     <button id="logoutButton" style="display:none;">Logout</button>
+    <button id="listEmployeesButton" style="display:none;">List Employees</button>
     <p id="loginStatus"></p> <!-- Placeholder for login status message -->
+    <div id="employeeList" style="display:none;">
+        <h2>Employee List</h2>
+        <ul id="employees"></ul>
+    </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -36,10 +41,12 @@
               .then(data => {
                   const statusElement = document.getElementById('loginStatus');
                   const logoutButton = document.getElementById('logoutButton');
+                  const listEmployeesButton = document.getElementById('listEmployeesButton');
                   if (data.success) {
-                      statusElement.textContent = `Login successful. Welcome, ${data.first_name}!`;
+                      statusElement.textContent = `Login successful. Welcome, ${data.name}!`;
                       statusElement.style.color = 'green';
                       logoutButton.style.display = 'block';
+                      listEmployeesButton.style.display = 'block';
                       document.getElementById('loginForm').style.display = 'none';
                   } else {
                       statusElement.textContent = 'Login failed. ' + data.message;
@@ -62,6 +69,8 @@
                       statusElement.style.color = 'green';
                       document.getElementById('loginForm').style.display = 'block';
                       document.getElementById('logoutButton').style.display = 'none';
+                      document.getElementById('listEmployeesButton').style.display = 'none';
+                      document.getElementById('employeeList').style.display = 'none';
                   } else {
                       statusElement.textContent = 'Logout failed. ' + data.message;
                       statusElement.style.color = 'red';
@@ -69,6 +78,31 @@
               }).catch(error => {
                   console.error('Error:', error);
                   document.getElementById('loginStatus').textContent = 'An error occurred during logout.';
+              });
+        });
+
+        document.getElementById('listEmployeesButton').addEventListener('click', function() {
+            fetch('http://localhost:3007/employees', {
+                method: 'GET',
+            }).then(response => response.json())
+              .then(data => {
+                  const employeeList = document.getElementById('employeeList');
+                  const employeesElement = document.getElementById('employees');
+                  employeesElement.innerHTML = '';
+                  if (data.success) {
+                      data.employees.forEach(employee => {
+                          const li = document.createElement('li');
+                          li.textContent = `${employee.first_name} ${employee.last_name}`;
+                          employeesElement.appendChild(li);
+                      });
+                      employeeList.style.display = 'block';
+                  } else {
+                      employeeList.style.display = 'none';
+                      document.getElementById('loginStatus').textContent = 'Failed to fetch employee list.';
+                  }
+              }).catch(error => {
+                  console.error('Error:', error);
+                  document.getElementById('loginStatus').textContent = 'An error occurred while fetching the employee list.';
               });
         });
     </script>

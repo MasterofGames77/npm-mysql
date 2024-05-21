@@ -73,6 +73,19 @@ app.post('/logout', (req, res) => {
     });
 });
 
+// Route to list all employees
+app.get('/employees', (req, res) => {
+    const query = 'SELECT * FROM employees';
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            return res.status(500).json({ success: false, message: 'Error querying the database' });
+        }
+
+        res.json({ success: true, employees: results });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
