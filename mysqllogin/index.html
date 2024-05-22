@@ -43,7 +43,7 @@
                   const logoutButton = document.getElementById('logoutButton');
                   const listEmployeesButton = document.getElementById('listEmployeesButton');
                   if (data.success) {
-                      statusElement.textContent = `Login successful. Welcome, ${data.name}!`;
+                      statusElement.textContent = `Login successful. Welcome, ${data.first_name}!`;
                       statusElement.style.color = 'green';
                       logoutButton.style.display = 'block';
                       listEmployeesButton.style.display = 'block';
