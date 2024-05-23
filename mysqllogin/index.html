@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Login</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <h2>Employee Login</h2>
@@ -19,9 +35,22 @@
     <button id="logoutButton" style="display:none;">Logout</button>
     <button id="listEmployeesButton" style="display:none;">List Employees</button>
     <p id="loginStatus"></p> <!-- Placeholder for login status message -->
+
     <div id="employeeList" style="display:none;">
         <h2>Employee List</h2>
-        <ul id="employees"></ul>
+        <table id="employeesTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Department</th>
+                    <th>Job Title</th>
+                </tr>
+            </thead>
+            <tbody id="employeesTableBody">
+                <!-- Employee rows will be inserted here -->
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -87,13 +116,18 @@
             }).then(response => response.json())
               .then(data => {
                   const employeeList = document.getElementById('employeeList');
-                  const employeesElement = document.getElementById('employees');
-                  employeesElement.innerHTML = '';
+                  const employeesTableBody = document.getElementById('employeesTableBody');
+                  employeesTableBody.innerHTML = '';
                   if (data.success) {
                       data.employees.forEach(employee => {
-                          const li = document.createElement('li');
-                          li.textContent = `${employee.first_name} ${employee.last_name}`;
-                          employeesElement.appendChild(li);
+                          const tr = document.createElement('tr');
+                          tr.innerHTML = `
+                              <td>${employee.first_name}</td>
+                              <td>${employee.last_name}</td>
+                              <td>${employee.department}</td>
+                              <td>${employee.job_title}</td>
+                          `;
+                          employeesTableBody.appendChild(tr);
                       });
                       employeeList.style.display = 'block';
                   } else {

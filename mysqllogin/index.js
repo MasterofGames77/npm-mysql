@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+// Tells express to use session middleware for management
 app.use(session({
     secret: 'Sundancers17',
     resave: false,
@@ -40,7 +41,7 @@ connection.connect(err => {
 
 // Route to handle login
 app.post('/login', (req, res) => {
-    const { last_name, password } = req.body;
+    const { last_name, password } = req.body; // Destructuring
 
     if (!last_name || !password) {
         return res.status(400).json({ success: false, message: 'Last name and password are required' });
@@ -56,7 +57,7 @@ app.post('/login', (req, res) => {
         if (results.length > 0) {
             req.session.user = results[0];
             res.json({ success: true, message: 'Login successful' , first_name: results[0].first_name});
-            console.log(`User ${results[0].first_name} has logged in.`);
+            console.log(`User ${results[0].first_name} ${results[0].last_name} has logged in.`);
         } else {
             res.status(401).json({ success: false, message: 'Invalid last name or password' });
         }
@@ -75,7 +76,7 @@ app.post('/logout', (req, res) => {
 
 // Route to list all employees
 app.get('/employees', (req, res) => {
-    const query = 'SELECT * FROM employees';
+    const query = 'SELECT first_name, last_name, department, job_title FROM employees';
     connection.query(query, (err, results) => {
         if (err) {
             console.error('Error querying the database:', err);
