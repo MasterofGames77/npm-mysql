@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); 
 const path = require('path');
 const app = express();
+// express app object ^
+// express is a web server
 const port = process.env.PORT || 3005;
 
 // Middleware to parse incoming request bodies
@@ -35,14 +37,14 @@ connection.connect(err => {
 
 // Endpoint to handle form submission
 app.post('/adduser', (req, res) => {
-    const { first_name, last_name, department, salary, job_title, hire_date, end_date } = req.body;
+    const { first_name, last_name, department, salary, job_title, hire_date, end_date, password } = req.body;
 
-    if (!first_name || !last_name || !department || !salary || !job_title || !hire_date) {
+    if (!first_name || !last_name || !department || !salary || !job_title || !hire_date || !password) {
         return res.status(400).send('All fields except EndDate are required');
     }
 
     const query = 'INSERT INTO employees SET ?';
-    const user = { first_name, last_name, department, salary, job_title, hire_date, end_date };
+    const user = { first_name, last_name, department, salary, job_title, hire_date, end_date, password };
 
     connection.query(query, user, (err, result) => {
         if (err) {
