@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Game Database</title>
+    <link rel="stylesheet" href="game_index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Video Games Archive</h1>
+        <div class="search-container">
+            <input type="text" id="title-input" placeholder="Search by title">
+            <input type="text" id="developer-input" placeholder="Search by developer">
+            <input type="text" id="genre-input" placeholder="Search by genre">
+            <input type="text" id="platform-input" placeholder="Search by platform">
+            <button id="search-button">Search</button>
+        </div>
+        <table id="videogames-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Developer</th>
+                    <th>Genre</th>
+                    <th>Release Date</th>
+                    <th>Platform</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div id="game-details"></div>
+    </div>
+    <script src="game_search.js"></script>
+</body>
+</html>
