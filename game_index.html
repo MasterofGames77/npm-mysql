@@ -7,6 +7,41 @@
     <link rel="stylesheet" href="game_index.css">
 </head>
 <body>
+    <style>
+        /* Add some basic styling for the modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px; 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
     <div class="container">
         <h1>Video Games Archive</h1>
         <div class="search-container">
@@ -30,6 +65,13 @@
             </tbody>
         </table>
         <div id="game-details"></div>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="game-artwork" src="" alt="Game Artwork" style="width:100%;">
+        </div>
     </div>
     <script src="game_search.js"></script>
 </body>

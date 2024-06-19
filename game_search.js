@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const videogamesTable = document.getElementById('videogames-table');
     const searchButton = document.getElementById('search-button');
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById('game-artwork');
+    const span = document.getElementsByClassName('close')[0];
 
     const fetchVideoGames = (query = '') => {
         fetch(`http://localhost:3000/videogames${query}`)
@@ -21,13 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         const row = document.createElement('tr');
                         const releaseDate = new Date(game.release_date).toISOString().split('T')[0];
                         row.innerHTML = `
-                            <td>${game.title}</td>
+                            <td><a href="#" class="game-title" data-artwork="${game.artwork_url}">${game.title}</a></td>
                             <td>${game.developer}</td>
                             <td>${game.genre}</td>
                             <td>${releaseDate}</td>
                             <td>${game.platform}</td>
                         `;
                         tableBody.appendChild(row);
+                    });
+
+                    // Add event listeners to game titles
+                    document.querySelectorAll('.game-title').forEach(title => {
+                        title.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            const artworkUrl = event.target.getAttribute('data-artwork');
+                            if (artworkUrl) {
+                                modalImg.src = artworkUrl;
+                                modal.style.display = 'block';
+                            }
+                        });
                     });
                 }
 
@@ -55,4 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
             videogamesTable.style.display = 'none'; // Hide the table if no search criteria
         }
     });
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = 'none';
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
 });
