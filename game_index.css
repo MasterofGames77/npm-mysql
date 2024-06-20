@@ -10,8 +10,8 @@ body {
 }
 
 .container {
-    width: 85%;
-    max-width: 805px;
+    width: 95%;
+    max-width: 1200px; /* Increased max-width to allow for a wider table */
     margin: 25px auto;
     padding: 20px;
     background-color: #a7a7a7;
@@ -28,22 +28,30 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.search-container input {
-    width: calc(25% - 10px); /* Adjusted width to accommodate removal of one input */
+.search-box {
+    width: calc(25% - 10px); /* Adjusted width to evenly distribute input fields */
     padding: 10px;
     margin: 5px;
 }
 
-.search-container button {
-    padding: 10px 20px;
-    margin: 5px;
+.search-box-full {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-button {
+    padding: 15px 30px;
+    margin-top: 10px;
+    align-self: center;
+    font-size: 16px; /* Increased font size for better readability */
 }
 
 table {
-    width: 100%;
+    width: 100%; /* Set table width to 100% of the container */
     border-collapse: collapse;
     margin-top: 20px;
 }
@@ -53,7 +61,7 @@ table, th, td {
 }
 
 th, td {
-    padding: 10px;
+    padding: 15px; /* Increased padding for better readability */
     text-align: left;
 }
 

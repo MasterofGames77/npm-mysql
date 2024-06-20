@@ -45,11 +45,13 @@
     <div class="container">
         <h1>Video Games Archive</h1>
         <div class="search-container">
-            <input type="text" id="title-input" placeholder="Search by title">
-            <input type="text" id="developer-input" placeholder="Search by developer">
-            <input type="text" id="genre-input" placeholder="Search by genre">
-            <input type="text" id="platform-input" placeholder="Search by platform">
-            <button id="search-button">Search</button>
+            <input type="text" id="title-input" class="search-box" placeholder="Search by title">
+            <input type="text" id="developer-input" class="search-box" placeholder="Search by developer">
+            <input type="text" id="genre-input" class="search-box" placeholder="Search by genre">
+            <input type="text" id="platform-input" class="search-box" placeholder="Search by platform">
+        </div>
+        <div class="search-container search-box-full">
+            <button id="search-button" class="search-button">Search</button>
         </div>
         <table id="videogames-table" style="display:none;">
             <thead>
