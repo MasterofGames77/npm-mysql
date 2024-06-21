@@ -45,13 +45,15 @@
     <div class="container">
         <h1>Video Games Archive</h1>
         <div class="search-container">
-            <input type="text" id="title-input" class="search-box" placeholder="Search by title">
-            <input type="text" id="developer-input" class="search-box" placeholder="Search by developer">
-            <input type="text" id="genre-input" class="search-box" placeholder="Search by genre">
-            <input type="text" id="platform-input" class="search-box" placeholder="Search by platform">
+            <input type="text" id="title-input" placeholder="Search by title">
+            <input type="text" id="developer-input" placeholder="Search by developer">
+            <input type="text" id="genre-input" placeholder="Search by genre">
+            <input type="text" id="platform-input" placeholder="Search by platform">
+            <button id="search-button">Search</button>
         </div>
-        <div class="search-container search-box-full">
-            <button id="search-button" class="search-button">Search</button>
+        <div id="sort-buttons" style="display:none;">
+            <button id="sort-title">Sort by Title</button>
+            <button id="sort-date">Sort by Release Date</button>
         </div>
         <table id="videogames-table" style="display:none;">
             <thead>
@@ -72,7 +74,7 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <img id="game-artwork" src="" alt="Game Artwork" style="width:100%;">
+            <img id="game-artwork" src="" alt="Game Artwork" style="width:100%">
         </div>
     </div>
     <script src="game_search.js"></script>

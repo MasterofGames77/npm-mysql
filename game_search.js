@@ -1,54 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
     const videogamesTable = document.getElementById('videogames-table');
     const searchButton = document.getElementById('search-button');
+    const sortTitleButton = document.getElementById('sort-title');
+    const sortDateButton = document.getElementById('sort-date');
     const modal = document.getElementById('myModal');
     const modalImg = document.getElementById('game-artwork');
     const span = document.getElementsByClassName('close')[0];
+
+    let videoGamesData = [];
 
     const fetchVideoGames = (query = '') => {
         fetch(`http://localhost:3000/videogames${query}`)
             .then(response => response.json())
             .then(data => {
-                const tableBody = videogamesTable.querySelector('tbody');
-                tableBody.innerHTML = ''; // Clear any previous content
-
-                if (data.length === 0) {
-                    const row = document.createElement('tr');
-                    const cell = document.createElement('td');
-                    cell.colSpan = 5;
-                    cell.textContent = 'No games found';
-                    row.appendChild(cell);
-                    tableBody.appendChild(row);
-                } else {
-                    data.forEach(game => {
-                        const row = document.createElement('tr');
-                        const releaseDate = new Date(game.release_date).toISOString().split('T')[0];
-                        row.innerHTML = `
-                            <td><a href="#" class="game-title" data-artwork="${game.artwork_url}">${game.title}</a></td>
-                            <td>${game.developer}</td>
-                            <td>${game.genre}</td>
-                            <td>${releaseDate}</td>
-                            <td>${game.platform}</td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-
-                    // Add event listeners to game titles
-                    document.querySelectorAll('.game-title').forEach(title => {
-                        title.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            const artworkUrl = event.target.getAttribute('data-artwork');
-                            if (artworkUrl) {
-                                modalImg.src = artworkUrl;
-                                modal.style.display = 'block';
-                            }
-                        });
-                    });
-                }
-
+                videoGamesData = data;
+                displayVideoGames(data);
                 videogamesTable.style.display = 'table'; // Show the table
+                document.getElementById('sort-buttons').style.display = 'block'; // Show the sort buttons
             })
             .catch(error => console.error('Error fetching data:', error));
+    };
+
+    const displayVideoGames = (data) => {
+        const tableBody = videogamesTable.querySelector('tbody');
+        tableBody.innerHTML = ''; // Clear any previous content
+
+        if (data.length === 0) {
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.colSpan = 5;
+            cell.textContent = 'No games found';
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        } else {
+            data.forEach(game => {
+                const row = document.createElement('tr');
+                const releaseDate = new Date(game.release_date).toISOString().split('T')[0];
+                row.innerHTML = `
+                    <td><a href="#" class="game-title" data-artwork="${game.artwork_url}">${game.title}</a></td>
+                    <td>${game.developer}</td>
+                    <td>${game.genre}</td>
+                    <td>${releaseDate}</td>
+                    <td>${game.platform}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Add event listeners to game titles
+            document.querySelectorAll('.game-title').forEach(title => {
+                title.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const artworkUrl = event.target.getAttribute('data-artwork');
+                    if (artworkUrl) {
+                        modalImg.src = artworkUrl;
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+        }
     };
 
     searchButton.addEventListener('click', () => {
@@ -68,8 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchVideoGames(query);
         } else {
             videogamesTable.style.display = 'none'; // Hide the table if no search criteria
+            document.getElementById('sort-buttons').style.display = 'none'; // Hide the sort buttons
         }
     });
+
+    const sortByTitle = () => {
+        const sortedData = [...videoGamesData].sort((a, b) => a.title.localeCompare(b.title));
+        displayVideoGames(sortedData);
+    };
+
+    const sortByDate = () => {
+        const sortedData = [...videoGamesData].sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+        displayVideoGames(sortedData);
+    };
+
+    sortTitleButton.addEventListener('click', sortByTitle);
+    sortDateButton.addEventListener('click', sortByDate);
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
