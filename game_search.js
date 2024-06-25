@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.innerHTML = `
                     <td><a href="#" class="game-title" data-artwork="${game.artwork_url}">${game.title}</a></td>
                     <td>${game.developer}</td>
+                    <td>${game.publisher}</td>
                     <td>${game.genre}</td>
                     <td>${releaseDate}</td>
                     <td>${game.platform}</td>
@@ -63,12 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
     searchButton.addEventListener('click', () => {
         const title = document.getElementById('title-input').value.trim();
         const developer = document.getElementById('developer-input').value.trim();
+        const publisher = document.getElementById('publisher-input').value.trim();
         const genre = document.getElementById('genre-input').value.trim();
         const platform = document.getElementById('platform-input').value.trim();
 
         let query = '?';
         if (title) query += `title=${encodeURIComponent(title)}&`;
         if (developer) query += `developer=${encodeURIComponent(developer)}&`;
+        if (publisher) query += `publisher=${encodeURIComponent(publisher)}&`;
         if (genre) query += `genre=${encodeURIComponent(genre)}&`;
         if (platform) query += `platform=${encodeURIComponent(platform)}&`;
         query = query.slice(0, -1); // Remove trailing '&' or '?' if no parameters

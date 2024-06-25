@@ -41,12 +41,12 @@ app.get('/videogames/:id', (req, res) => {
 });
 
 app.get('/videogames', (req, res) => {
-    const { title, developer, genre, platform } = req.query;
+    const { title, developer, publisher, genre, platform } = req.query;
 
     // Construct the SQL query dynamically
     let query = 'SELECT * FROM videogames';
     const queryParams = [];
-    if (title || developer || genre || platform) {
+    if (title || developer || publisher || genre || platform) {
         query += ' WHERE ';
         const conditions = [];
         if (title) {
@@ -56,6 +56,10 @@ app.get('/videogames', (req, res) => {
         if (developer) {
             conditions.push('developer LIKE ?');
             queryParams.push(`%${developer}%`);
+        }
+        if (publisher) {
+            conditions.push('publisher LIKE ?');
+            queryParams.push(`%${publisher}%`);
         }
         if (genre) {
             conditions.push('genre LIKE ?');
