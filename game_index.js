@@ -3,13 +3,17 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 app.use(cors());
+
+// Serve static files from the "public" and "game images" directories
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/game-images', express.static(path.join(__dirname, 'game images')));
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -94,7 +98,6 @@ app.get('/videogames/:id/artwork', (req, res) => {
         res.json({ artworkUrl });
     });
 });
-
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

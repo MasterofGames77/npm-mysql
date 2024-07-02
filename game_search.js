@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.length === 0) {
             const row = document.createElement('tr');
             const cell = document.createElement('td');
-            cell.colSpan = 5;
+            cell.colSpan = 6;
             cell.textContent = 'No games found';
             row.appendChild(cell);
             tableBody.appendChild(row);
@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 tableBody.appendChild(row);
             });
 
-            // Add event listeners to game titles
             document.querySelectorAll('.game-title').forEach(title => {
                 title.addEventListener('click', (event) => {
                     event.preventDefault();
@@ -97,12 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
     sortTitleButton.addEventListener('click', sortByTitle);
     sortDateButton.addEventListener('click', sortByDate);
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = 'none';
     };
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
