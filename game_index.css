@@ -30,7 +30,7 @@ h1 {
 
 .search-container input[type="text"],
 .search-container button {
-  font-size: 15px; /* Increase font size */
+  font-size: 14px; /* Increase font size */
   padding: 10px; /* Increase padding */
   margin: 5px;
   border: 1px solid #ccc;
@@ -38,7 +38,7 @@ h1 {
 }
 
 .search-container input[type="text"] {
-  width: 250px;
+  width: 240px;
 }
 
 .search-container button {
@@ -59,7 +59,7 @@ table {
 
 th,
 td {
-  padding: 15px; /* Increase padding */
+  padding: 14px; /* Increase padding */
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -78,7 +78,7 @@ tr:hover {
 }
 
 #sort-buttons button {
-  font-size: 16px; /* Increase font size */
+  font-size: 14px; /* Increase font size */
   padding: 10px; /* Increase padding */
   margin: 5px;
   background-color: #007bff;
